@@ -20,7 +20,7 @@ public:
             "com.rekoo.pubgm",
             "com.pubg.imobile",
             "com.pubg.krmobile",
-            "com.vng.pubgmobile",
+            "vn.vng.pubgmobile",
         };
     }
 
