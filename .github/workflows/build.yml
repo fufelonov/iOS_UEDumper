@@ -1,0 +1,33 @@
+name: Build iOS Package
+
+on:
+  workflow_dispatch:
+  push:
+
+jobs:
+  build:
+    runs-on: macos-latest
+    env:
+      THEOS: ${{ github.workspace }}/theos
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - run: brew install ldid xz
+
+      - run: git clone --recursive https://github.com/theos/theos.git $THEOS
+
+      - run: |
+          curl -LO https://github.com/theos/sdks/archive/master.zip
+          unzip master.zip
+          mv sdks-master/*.sdk $THEOS/sdks/
+          rm -r master.zip sdks-master
+
+      - run: make package FINALPACKAGE=1
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: UEDumper-DEB
+          path: packages/*.deb
