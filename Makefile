@@ -20,7 +20,7 @@ RPM_USE_MEMCPY = 1
 
 ZIP_ARCHIVE_DEFINES = -DHAVE_INTTYPES_H -DHAVE_PKCRYPT -DHAVE_STDINT_H -DHAVE_WZAES -DHAVE_ZLIB
 
-# Исправленные пути (убраны ../)
+# Пути к зависимостям (оставляем как есть, если папка deps в корне)
 KITTYMEMORY_PATH = deps/KittyMemory/KittyMemory
 KITTYMEMORY_SRC = $(wildcard $(KITTYMEMORY_PATH)/*.cpp)
 
@@ -30,9 +30,11 @@ $(DEPS_PATH)/SSZipArchive/SSZipArchive.m $(wildcard $(DEPS_PATH)/SSZipArchive/mi
 
 TWEAK_NAME = UEDumper
 
-$(TWEAK_NAME)_FILES = src/Tweak.mm src/Dumper.cpp src/UPackageGenerator.cpp \
-src/Utils/AlertUtils.mm src/Utils/KittyAlertView.mm src/Utils/BufferFmt.cpp \
-$(wildcard src/UE/*.cpp) $(DEPS_SRC)
+# --- ИСПРАВЛЕНИЕ ЗДЕСЬ ---
+# Мы добавили "Tweak/" перед каждым "src/"
+$(TWEAK_NAME)_FILES = Tweak/src/Tweak.mm Tweak/src/Dumper.cpp Tweak/src/UPackageGenerator.cpp \
+Tweak/src/Utils/AlertUtils.mm Tweak/src/Utils/KittyAlertView.mm Tweak/src/Utils/BufferFmt.cpp \
+$(wildcard Tweak/src/UE/*.cpp) $(DEPS_SRC)
 
 $(TWEAK_NAME)_CFLAGS = -fobjc-arc $(ZIP_ARCHIVE_DEFINES) -Wno-deprecated-declarations
 
